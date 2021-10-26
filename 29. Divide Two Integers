@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend ==0)
+        {
+            return 0;
+        }
+        if(divisor == 1)
+        {
+            return dividend;
+        }
+        if(divisor == -1)
+        {
+            if(dividend == INT_MIN)
+            {
+                return INT_MAX;
+            }
+            return -dividend;
+        }
+
+        int flag = 1;
+        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0))
+        {
+            flag = -1;
+        }
+        if(dividend > 0) dividend = -dividend;
+        if(divisor > 0) divisor = -divisor;
+        int res = div(dividend, divisor);
+
+        return flag>0 ? res : -res;
+
+    }
+
+    int div(int a, int b)
+    {
+        if(a > b) return 0;
+        int count = 1;
+        int tb = b;
+        while((a-tb) <= tb)
+        {
+            count = count + count;
+            tb = tb + tb;
+        }
+        return count + div(a-tb, b);
+    }
+};
